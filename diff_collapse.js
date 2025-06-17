@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
                + '<div class="toggle">' + title + '</div>'
                + '<div class="content"><pre>' + headerLine + '</pre>';
         } else {
-          if (i > 1) out += '</div></div>';
-          out += '<pre>' + chunk + '</pre>';
+            out += '<pre>' + chunk + '</pre>';
+            if (i > 1) out += '</div></div>';
         }
       });
       pre.outerHTML = out;

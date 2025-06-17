@@ -1,8 +1,9 @@
 .toggle {
   cursor: pointer;
   display: block;
-  background: #eee;
+  background: #444;
   padding: 0.2em;
+  color: #fff;
 }
 .content {
   display: none;
