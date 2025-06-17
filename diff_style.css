@@ -1,18 +1,41 @@
+:root {
+    --zenburn-bg:       #3f3f3f;
+    --zenburn-fg:       #dcdccc;
+    --zenburn-highlight:#6f6f6f;
+    --zenburn-accent:   #f0dfaf;
+    --zenburn-muted:    #9fafaf;
+}
+
+body {
+    color: var(--zenburn-fg);
+    background-color: var(--zenburn-bg);
+    font-family: sans-serif;
+}
+
 .toggle {
     cursor: pointer;
     display: block;
-    background: #444;
-    padding: 0.2em;
-    color: #fff;
+    background: var(--zenburn-highlight);
+    padding: 0.4em 0.6em;
+    color: var(--zenburn-accent);
+    border-left: 3px solid var(--zenburn-accent);
+    transition: background 0.3s, color 0.3s;
 }
+
+.toggle:hover {
+    background: #5f5f5f;
+    color: var(--zenburn-fg);
+}
+
 .content {
     display: none;
     margin-left: 1em;
+    padding: 0.4em;
+    background-color: #2b2b2b;
+    color: var(--zenburn-muted);
+    border-left: 2px solid var(--zenburn-highlight);
 }
+
 .section.open .content {
     display: block;
-}
-body {
-    color:white;
-    background-color:black
 }
