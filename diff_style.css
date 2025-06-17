@@ -1,14 +1,18 @@
 .toggle {
-  cursor: pointer;
-  display: block;
-  background: #444;
-  padding: 0.2em;
-  color: #fff;
+    cursor: pointer;
+    display: block;
+    background: #444;
+    padding: 0.2em;
+    color: #fff;
 }
 .content {
-  display: none;
-  margin-left: 1em;
+    display: none;
+    margin-left: 1em;
 }
 .section.open .content {
-  display: block;
+    display: block;
+}
+body {
+    color:white;
+    background-color:black
 }

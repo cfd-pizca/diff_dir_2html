@@ -6,11 +6,11 @@
 <head>
   <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
   <meta charset="UTF-8">
-  <title>Diff: {{ name1 }} vs {{ name2 }}</title>
+  <title>diff :: {{ name1 }} :: {{ name2 }}</title>
   <style>{{ css }}</style>
 </head>
-<body style="color:white; background-color:black">
-  <h1>{{ name1 }} vs {{ name2 }}</h1>
+<body>
+  <h1>diff :: {{ name1 }} :: {{ name2 }}</h1>
   <div id="diff-content">
     <pre>
       {{ diff_html | safe }}
