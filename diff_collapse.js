@@ -1,12 +1,4 @@
-// Variables inyectadas por Python:
-// var headerTitle = '... vs ...';
-// var footerMsg = '...';
-// var excludePatterns = [...] ;
 document.addEventListener("DOMContentLoaded", function() {
-  // Insert header
-  var h1 = document.createElement('h1');
-  h1.textContent = headerTitle;
-  document.body.insertBefore(h1, document.body.firstChild);
 
   // Collapsible sections
   document.querySelectorAll('pre').forEach(function(pre) {
@@ -36,19 +28,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Append footer
-  var p = document.createElement('p');
-  p.textContent = footerMsg;
-  document.body.appendChild(p);
-
-  // Append exclude list
-  if (excludePatterns && excludePatterns.length) {
-    var ul = document.createElement('ul');
-    excludePatterns.forEach(function(pat) {
-      var li = document.createElement('li');
-      li.textContent = pat;
-      ul.appendChild(li);
-    });
-    document.body.appendChild(ul);
-  }
 });
