@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Preserve caller location and script directory
+ORIG_PWD=$(pwd)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Orquesta:
 # 1) Genera diff coloreado con ignores y regex extras
 # 2) Convierte a HTML preliminar con aha
@@ -18,14 +22,25 @@ shift $((OPTIND-1))
 [[ $# -ge 2 && $# -le 3 ]] || usage
 DIR1=$1; DIR2=$2; OUT=${3:-}
 
+# Convert directories to absolute paths before leaving caller directory
+DIR1=$(realpath "$DIR1")
+DIR2=$(realpath "$DIR2")
+
 # Prep names
-R1=$(realpath "$DIR1"); R2=$(realpath "$DIR2")
-N1=$(basename "$R1"); N2=$(basename "$R2")
+N1=$(basename "$DIR1"); N2=$(basename "$DIR2")
 H1=$(git -C "$DIR1" rev-parse --short=8 HEAD 2>/dev/null || echo fallback)
 H2=$(git -C "$DIR2" rev-parse --short=8 HEAD 2>/dev/null || echo fallback)
 
-# Output path\ IF [[ -z "$OUT" ]]; then OUT="./diff_${N1}-${H1}_${N2}-${H2}.html"; fi
+# Output path, default relative to original directory
+if [[ -z "$OUT" ]]; then
+  OUT="$ORIG_PWD/diff_${N1}-${H1}_${N2}-${H2}.html"
+else
+  OUT=$(realpath -m "$OUT")
+fi
 mkdir -p "$(dirname "$OUT")"
+
+# Switch to script directory for resource lookup
+cd "$SCRIPT_DIR"
 
 tmpd=$(mktemp -d)
 # git diff --no-index && aha
