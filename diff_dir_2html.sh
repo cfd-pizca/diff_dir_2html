@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Ensure script runs from its own directory so relative paths work
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 # Orquesta:
 # 1) Genera diff coloreado con ignores y regex extras
 # 2) Convierte a HTML preliminar con aha
