@@ -1,0 +1,13 @@
+.toggle {
+  cursor: pointer;
+  display: block;
+  background: #eee;
+  padding: 0.2em;
+}
+.content {
+  display: none;
+  margin-left: 1em;
+}
+.section.open .content {
+  display: block;
+}
