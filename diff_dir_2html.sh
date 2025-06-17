@@ -49,7 +49,7 @@ aha < "$tmpd/d.txt" > "$tmpd/d.html"
 
 # Call Python assembler
 assemble_diff.py diff_template.html.j2 \
-  "$tmpd/d.html" diff_collapse.css diff_collapse.js \
+  "$tmpd/d.html" diff_style.css diff_collapse.js \
   "$N1" "$N2" "${EX[@]}" "$OUT"
 
 echo "Generated $OUT"
