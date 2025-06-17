@@ -1,4 +1,5 @@
-import sys
+#!/usr/bin/env python3
+import argparse
 import jinja2
 
 def main(template_path, diff_html_path, css_path, js_path,
@@ -21,8 +22,26 @@ def main(template_path, diff_html_path, css_path, js_path,
         f.write(rendered)
 
 if __name__ == '__main__':
-    # Parámetros: template, diff.html, css, js, name1, name2, excludes..., output
-    template, diff_html, css, js, name1, name2 = sys.argv[1:7]
-    excludes = sys.argv[7:-1]
-    output = sys.argv[-1]
-    main(template, diff_html, css, js, name1, name2, excludes, output)
+    parser = argparse.ArgumentParser(description="Combine diff HTML with template")
+    parser.add_argument("--template", required=True, help="Jinja2 template path")
+    parser.add_argument("--diff-html", required=True, dest="diff_html",
+                        help="HTML produced from git diff")
+    parser.add_argument("--css", required=True, help="CSS file path")
+    parser.add_argument("--js", required=True, help="JS file path")
+    parser.add_argument("--name1", required=True, help="Name of first directory")
+    parser.add_argument("--name2", required=True, help="Name of second directory")
+    parser.add_argument("--exclude", action="append", default=[],
+                        help="Exclude patterns")
+    parser.add_argument("--output", required=True, help="Output HTML path")
+    args = parser.parse_args()
+
+    main(
+        args.template,
+        args.diff_html,
+        args.css,
+        args.js,
+        args.name1,
+        args.name2,
+        args.exclude,
+        args.output,
+    )
