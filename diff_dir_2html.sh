@@ -77,7 +77,7 @@ done
 assemble_diff.py \
   --template diff_template.html.j2 \
   --diff-html "$tmpd/d.html" \
-  --css diff_collapse.css \
+  --css diff_style.css \
   --js diff_collapse.js \
   --name1 "$N1" \
   --name2 "$N2" \

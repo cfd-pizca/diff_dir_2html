@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
+#
+
 import argparse
 import jinja2
 
 def main(template_path, diff_html_path, css_path, js_path,
          name1, name2, excludes, output_path):
     # Leer recursos
-    tpl = jinja2.Template(open(template_path).read())
-    css = open(css_path).read()
-    js = open(js_path).read()
-    diff_html = open(diff_html_path).read()
+    with open(template_path) as f:
+        tpl = jinja2.Template(f.read())
+    with open(css_path) as f:
+        css = f.read()
+    with open(js_path) as f:
+        js = f.read()
+    with open(diff_html_path) as f:
+        diff_html = f.read()
 
     rendered = tpl.render(
         name1=name1,
