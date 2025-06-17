@@ -8,9 +8,12 @@
 ./diff_dir_2html.sh [-e PATTERN] <dir1> <dir2> [output]
 ```
 
-- `-e PATTERN` can be repeated to exclude files matching a pattern.
+- `-e PATTERN` can be repeated to exclude files whose path matches a POSIX
+extended regular expression.
 - `<dir1>` and `<dir2>` are the directories to compare.
-- `[output]` optional path to the resulting HTML file. If omitted, a name based on the directory names and git revisions is generated.
+- `[output]` optional path to the resulting HTML file. If omitted, a name based on the directory names and git revisions is generated. If the path ends with `/`, the directory is created and a filename is generated automatically.
+
+Exclude patterns are applied after the directories are copied to a temporary location, so files matching the patterns do not appear in the diff.
 
 The script produces an HTML page where every file diff can be expanded or collapsed individually.
 
@@ -27,7 +30,7 @@ The script produces an HTML page where every file diff can be expanded or collap
 - `diff_collapse.js` – adds collapsible sections and injects metadata.
 - `diff_style.css` – minimal styles for the page.
 
-The HTML template `diff_template.html.j2` and optional stylesheet `diff_collapse.css` are expected to be present when invoking the script.
+The HTML template `diff_template.html.j2` and optional stylesheet `diff_style.css` are expected to be present when invoking the script.
 
 ## License
 
