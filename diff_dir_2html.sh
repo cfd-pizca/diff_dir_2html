@@ -66,7 +66,7 @@ done
 
 # git diff --no-index && aha
 git diff --no-index --color=always "$R1" "$R2" > "$tmpd/d.txt" || true
-aha < "$tmpd/d.txt" > "$tmpd/d.html"
+aha --no-header < "$tmpd/d.txt" > "$tmpd/d.html"
 
 # Call Python assembler
 EX_ARGS=()
