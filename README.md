@@ -27,7 +27,7 @@ The script produces an HTML page where every file diff can be expanded or collap
 - `diff_collapse.js` – adds collapsible sections and injects metadata.
 - `diff_style.css` – minimal styles for the page.
 
-The HTML template `diff_template.html.j2` and optional stylesheet `diff_collapse.css` are expected to be present when invoking the script.
+The HTML template `diff_template.html.j2` and optional stylesheet `diff_style.css` are expected to be present when invoking the script.
 
 ## License
 
