@@ -48,8 +48,19 @@ git diff --no-index --color=always "$DIR1" "$DIR2" > "$tmpd/d.txt" || true
 aha < "$tmpd/d.txt" > "$tmpd/d.html"
 
 # Call Python assembler
-assemble_diff.py diff_template.html.j2 \
-  "$tmpd/d.html" diff_style.css diff_collapse.js \
-  "$N1" "$N2" "${EX[@]}" "$OUT"
+EX_ARGS=()
+for e in "${EX[@]}"; do
+  EX_ARGS+=(--exclude "$e")
+done
+
+assemble_diff.py \
+  --template diff_template.html.j2 \
+  --diff-html "$tmpd/d.html" \
+  --css diff_style.css \
+  --js diff_collapse.js \
+  --name1 "$N1" \
+  --name2 "$N2" \
+  "${EX_ARGS[@]}" \
+  --output "$OUT"
 
 echo "Generated $OUT"
