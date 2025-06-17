@@ -53,7 +53,7 @@ for e in "${EX[@]}"; do
   EX_ARGS+=(--exclude "$e")
 done
 
-assemble_diff.py \
+./assemble_diff.py \
   --template diff_template.html.j2 \
   --diff-html "$tmpd/d.html" \
   --css diff_style.css \
