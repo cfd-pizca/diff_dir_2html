@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Diff: {{ name1 }} vs {{ name2 }}</title>
+  <style>{{ css }}</style>
+</head>
+<body>
+  <h1>{{ name1 }} vs {{ name2 }}</h1>
+  <div id="diff-content">
+    {{ diff_html | safe }}
+  </div>
+  <footer>
+    <p>Files ignored by Git are ignored here too.</p>
+    {% if excludes %}
+    <ul>
+    {% for pat in excludes %}
+      <li>{{ pat }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+  </footer>
+  <script>{{ js }}</script>
+</body>
+</html>
