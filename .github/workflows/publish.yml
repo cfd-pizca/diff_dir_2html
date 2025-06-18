@@ -18,6 +18,7 @@ jobs:
 
       - name: Generate HTML diff
         run: |
+          mkdir -p docs
           bash diff_dir_2html.sh example/case1 example/case2 docs/index.html
 
       - name: Deploy to GitHub Pages
