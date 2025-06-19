@@ -11,7 +11,7 @@
 - `-e PATTERN` can be repeated to exclude files whose path matches a POSIX
 extended regular expression.
 - `<dir1>` and `<dir2>` are the directories to compare.
-- `[output]` optional path to the resulting HTML file. If omitted, a name based on the directory names and git revisions is generated. If the path ends with `/`, the directory is created and a filename is generated automatically.
+- `[output]` optional path to the resulting HTML file. If omitted, the file is named `diff_<dir1>_<dir2>.html` in the current directory. If the path ends with `/`, the directory is created and the filename is generated automatically. Commit hashes for each directory appear in the page header instead of the filename.
 
 Exclude patterns are applied after the directories are copied to a temporary location, so files matching the patterns do not appear in the diff.
 

@@ -5,7 +5,7 @@ import argparse
 import jinja2
 
 def main(template_path, diff_html_path, css_path, js_path,
-         name1, name2, excludes, output_path):
+         name1, name2, hash1, hash2, excludes, output_path):
     # Leer recursos
     with open(template_path) as f:
         tpl = jinja2.Template(f.read())
@@ -19,6 +19,8 @@ def main(template_path, diff_html_path, css_path, js_path,
     rendered = tpl.render(
         name1=name1,
         name2=name2,
+        hash1=hash1,
+        hash2=hash2,
         css=css,
         js=js,
         diff_html=diff_html,
@@ -36,6 +38,8 @@ if __name__ == '__main__':
     parser.add_argument("--js", required=True, help="JS file path")
     parser.add_argument("--name1", required=True, help="Name of first directory")
     parser.add_argument("--name2", required=True, help="Name of second directory")
+    parser.add_argument("--hash1", required=True, help="Git hash of first directory")
+    parser.add_argument("--hash2", required=True, help="Git hash of second directory")
     parser.add_argument("--exclude", action="append", default=[],
                         help="Exclude patterns")
     parser.add_argument("--output", required=True, help="Output HTML path")
@@ -48,6 +52,8 @@ if __name__ == '__main__':
         args.js,
         args.name1,
         args.name2,
+        args.hash1,
+        args.hash2,
         args.exclude,
         args.output,
     )
