@@ -145,11 +145,12 @@ def main():
         output = orig_pwd / f'diff_{name1}-{h1}_{name2}-{h2}.html'
 
     diff_html = build_diff_html(dir1, dir2, excludes)
+    script_dir = Path(__file__).resolve().parent
     render_html(
         diff_html,
-        Path('diff_template.html.j2'),
-        Path('diff_style.css'),
-        Path('diff_collapse.js'),
+        script_dir / 'diff_template.html.j2',
+        script_dir / 'diff_style.css',
+        script_dir / 'diff_collapse.js',
         name1,
         name2,
         excludes,
