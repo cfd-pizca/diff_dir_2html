@@ -19,6 +19,7 @@
   <footer>
     <p>Files ignored by Git are ignored here too.</p>
     {% if excludes %}
+    <p>The following regex patterns are excluded too:</p>
     <ul>
     {% for pat in excludes %}
       <li>{{ pat }}</li>
