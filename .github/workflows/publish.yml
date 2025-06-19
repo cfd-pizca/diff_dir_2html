@@ -13,12 +13,12 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3 python3-pip aha
+          sudo apt-get install -y python3 python3-pip
           sudo pip3 install --user jinja2
 
       - name: Generate HTML diff
         run: |
-          bash diff_dir_2html.sh example/case1 example/case2 docs/index.html
+          python3 diff_dir_2html.py example/case1 example/case2 docs/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
