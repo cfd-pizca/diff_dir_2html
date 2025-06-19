@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- This file was created with the aha Ansi HTML Adapter. https://github.com/theZiz/aha -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
+  <meta charset="UTF-8">
+  <title>diff :: case1 :: case2</title>
+  <style>:root {
+    --zenburn-bg:       #3f3f3f;
+    --zenburn-fg:       #dcdccc;
+    --zenburn-highlight:#6f6f6f;
+    --zenburn-accent:   #f0dfaf;
+    --zenburn-muted:    #9fafaf;
+}
+
+body {
+    color: var(--zenburn-fg);
+    background-color: var(--zenburn-bg);
+    font-family: sans-serif;
+}
+
+.toggle {
+    cursor: pointer;
+    display: block;
+    background: var(--zenburn-highlight);
+    padding: 0.4em 0.6em;
+    color: var(--zenburn-accent);
+    border-left: 3px solid var(--zenburn-accent);
+    transition: background 0.3s, color 0.3s;
+}
+
+.toggle:hover {
+    background: #5f5f5f;
+    color: var(--zenburn-fg);
+}
+
+.content {
+    display: none;
+    margin-left: 1em;
+    padding: 0.4em;
+    background-color: #2b2b2b;
+    color: var(--zenburn-muted);
+    border-left: 2px solid var(--zenburn-highlight);
+}
+
+.section.open .content {
+    display: block;
+}
+</style>
+</head>
+<body>
+  <h1>diff :: case1 :: case2</h1>
+  <div id="diff-content">
+    <pre>
+      <span style="font-weight:bold;">diff --git a/tmp/tmp.ffkhDsdA4m/dir1/file1.py b/tmp/tmp.ffkhDsdA4m/dir2/file1.py</span>
+<span style="font-weight:bold;">index 3b7ee30..b018139 100644</span>
+<span style="font-weight:bold;">--- a/tmp/tmp.ffkhDsdA4m/dir1/file1.py</span>
+<span style="font-weight:bold;">+++ b/tmp/tmp.ffkhDsdA4m/dir2/file1.py</span>
+<span style="color:teal;">@@ -1,5 +1,5 @@</span>
+ def message():
+<span style="color:red;">-    return &quot;case1 file1&quot;</span>
+<span style="color:green;">+</span><span style="color:green;">    return &quot;case2 file1&quot;</span>
+ 
+ if __name__ == &quot;__main__&quot;:
+     print(message())
+<span style="font-weight:bold;">diff --git a/tmp/tmp.ffkhDsdA4m/dir1/file2.py b/tmp/tmp.ffkhDsdA4m/dir2/file2.py</span>
+<span style="font-weight:bold;">index 4b55619..4ebfb32 100644</span>
+<span style="font-weight:bold;">--- a/tmp/tmp.ffkhDsdA4m/dir1/file2.py</span>
+<span style="font-weight:bold;">+++ b/tmp/tmp.ffkhDsdA4m/dir2/file2.py</span>
+<span style="color:teal;">@@ -1,7 +1,7 @@</span>
+<span style="color:red;">-VALUE = 1</span>
+<span style="color:green;">+</span><span style="color:green;">VALUE = 2</span>
+ 
+ def double(x):
+<span style="color:red;">-    return x * 2</span>
+<span style="color:green;">+</span><span style="color:green;">    return x * 2 + VALUE</span>
+ 
+ if __name__ == &quot;__main__&quot;:
+<span style="color:red;">-    print(double(VALUE))</span>
+<span style="color:green;">+</span><span style="color:green;">    print(double(1))</span>
+<span style="font-weight:bold;">diff --git a/tmp/tmp.ffkhDsdA4m/dir1/file3.py b/tmp/tmp.ffkhDsdA4m/dir2/file3.py</span>
+<span style="font-weight:bold;">index 9552088..ebf8077 100644</span>
+<span style="font-weight:bold;">--- a/tmp/tmp.ffkhDsdA4m/dir1/file3.py</span>
+<span style="font-weight:bold;">+++ b/tmp/tmp.ffkhDsdA4m/dir2/file3.py</span>
+<span style="color:teal;">@@ -1,5 +1,5 @@</span>
+ def greet(name):
+<span style="color:red;">-    return f&quot;Hello, {name}!&quot;</span>
+<span style="color:green;">+</span><span style="color:green;">    return f&quot;Hi, {name}!&quot;</span>
+ 
+ if __name__ == &quot;__main__&quot;:
+     print(greet(&quot;World&quot;))
+
+    </pre>
+  </div>
+  <footer>
+    <p>Files ignored by Git are ignored here too.</p>
+    
+  </footer>
+  <script>document.addEventListener("DOMContentLoaded", function() {
+
+  // Collapsible sections
+  document.querySelectorAll('pre').forEach(function(pre) {
+    var html = pre.innerHTML.replace(/tmp\/tmp[^\/]+\//g, '');
+    var parts = html.split(/(diff --git a\/\S+ b\/\S+)/);
+    if (parts.length > 1) {
+      var out = '';
+      parts.forEach(function(chunk, i) {
+        if (i % 2 === 1) {
+          var headerLine = chunk;
+          var m = headerLine.match(/diff --git a\/(\S+) b\//);
+          var title = m ? m[1] : headerLine;
+          out += '<div class="section">'
+               + '<div class="toggle">' + title + '</div>'
+               + '<div class="content"><pre>' + headerLine + '</pre>';
+        } else {
+            out += '<pre>' + chunk + '</pre>';
+            if (i > 1) out += '</div></div>';
+        }
+      });
+      pre.outerHTML = out;
+      document.querySelectorAll('.toggle').forEach(function(t) {
+        t.addEventListener('click', function() {
+          t.parentNode.classList.toggle('open');
+        });
+      });
+    }
+  });
+
+});
+</script>
+</body>
+</html>
