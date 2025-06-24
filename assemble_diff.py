@@ -6,7 +6,7 @@ import jinja2
 
 def main(template_path, diff_html_path, css_path, js_path,
          name1, name2, hash1, hash2, excludes, output_path):
-    # Leer recursos
+    # Read resources
     with open(template_path) as f:
         tpl = jinja2.Template(f.read())
     with open(css_path) as f:
