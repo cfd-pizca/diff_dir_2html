@@ -5,10 +5,10 @@ set -euo pipefail
 ORIG_PWD=$(pwd)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Orquesta:
-# 1) Genera diff coloreado con ignores y regex extras
-# 2) Convierte a HTML preliminar con aha
-# 3) Invoca assemble_diff.py para producir el HTML final
+# Script workflow:
+# 1) Generate a colored diff with optional ignores and extra regex filters
+# 2) Convert that diff to preliminary HTML using aha
+# 3) Run assemble_diff.py to create the final HTML output
 
 usage() {
   echo "Usage: $0 [-e PATTERN] <dir1> <dir2> [output]"
