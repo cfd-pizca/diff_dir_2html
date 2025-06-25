@@ -45,6 +45,9 @@ else
 fi
 mkdir -p "$(dirname "$OUT")"
 
+# Ensure aha is available before proceeding
+command -v aha >/dev/null || { echo "Error: aha not installed" >&2; exit 1; }
+
 # Switch to script directory for resource lookup
 cd "$SCRIPT_DIR"
 
