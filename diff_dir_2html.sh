@@ -33,12 +33,12 @@ H2=$(git -C "$DIR2" rev-parse --short=8 HEAD 2>/dev/null || echo fallback)
 
 # Output path, default relative to original directory
 if [[ -z "$RAW_OUT" ]]; then
-  OUT="$ORIG_PWD/diff=o=${N1}=o=${N2}.html"
+  OUT="$ORIG_PWD/diff___${N1}___${N2}.html"
 else
   if [[ "$RAW_OUT" == */ ]]; then
     OUT_DIR=$(realpath -m "$RAW_OUT")
     mkdir -p "$OUT_DIR"
-    OUT="$OUT_DIR/diff_${N1}_${N2}.html"
+    OUT="$OUT_DIR/diff___${N1}___${N2}.html"
   else
     OUT=$(realpath -m "$RAW_OUT")
   fi
