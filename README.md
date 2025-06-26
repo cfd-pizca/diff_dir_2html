@@ -14,6 +14,7 @@ extended regular expression.
 - `[output]` optional path to the resulting HTML file. If omitted, the file is named `diff_<dir1>_<dir2>.html` in the current directory. If the path ends with `/`, the directory is created and the filename is generated automatically. Commit hashes for each directory appear in the page header instead of the filename.
 
 Exclude patterns are applied after the directories are copied to a temporary location, so files matching the patterns do not appear in the diff.
+Temporary paths are stripped from the diff output so that file references show the original directory names.
 
 The script produces an HTML page where every file diff can be expanded or collapsed individually.
 

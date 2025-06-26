@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Collapsible sections
   document.querySelectorAll('pre').forEach(function(pre) {
-    var html = pre.innerHTML.replace(/tmp\/tmp[^\/]+\//g, '');
+    var html = pre.innerHTML;
     var parts = html.split(/(diff --git a\/\S+ b\/\S+)/);
     if (parts.length > 1) {
       var out = '';

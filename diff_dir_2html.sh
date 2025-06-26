@@ -69,7 +69,11 @@ done
 
 # git diff --no-index && aha
 git diff --no-index --color=always "$R1" "$R2" > "$tmpd/d.txt" || true
-aha --no-header < "$tmpd/d.txt" > "$tmpd/d.html"
+# Replace temporary paths with the original directory names for clarity
+ESC_R1=$(printf '%s\n' "$R1" | sed 's/[\\/&]/\\&/g')
+ESC_R2=$(printf '%s\n' "$R2" | sed 's/[\\/&]/\\&/g')
+sed -e "s|$ESC_R1|/$N1|g" -e "s|$ESC_R2|/$N2|g" "$tmpd/d.txt" \
+  | aha --no-header > "$tmpd/d.html"
 
 # Call Python assembler
 EX_ARGS=()
