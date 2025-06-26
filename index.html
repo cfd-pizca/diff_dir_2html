@@ -6,7 +6,7 @@
 <head>
   <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
   <meta charset="UTF-8">
-  <title>diff :: case1 (68f0e201) :: case2 (68f0e201)</title>
+  <title>diff :: case1 (566f178d) :: case2 (566f178d)</title>
   <style>:root {
     --zenburn-bg:       #3f3f3f;
     --zenburn-fg:       #dcdccc;
@@ -51,13 +51,13 @@ body {
 </style>
 </head>
 <body>
-  <h1>diff :: case1 (68f0e201) :: case2 (68f0e201)</h1>
+  <h1>diff :: case1 (566f178d) :: case2 (566f178d)</h1>
   <div id="diff-content">
     <pre>
-      <span style="font-weight:bold;">diff --git a/tmp/tmp.sRqwlcqXum/dir1/file1.py b/tmp/tmp.sRqwlcqXum/dir2/file1.py</span>
+      <span style="font-weight:bold;">diff --git a/case1/file1.py b/case2/file1.py</span>
 <span style="font-weight:bold;">index 3b7ee30..b018139 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.sRqwlcqXum/dir1/file1.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.sRqwlcqXum/dir2/file1.py</span>
+<span style="font-weight:bold;">--- a/case1/file1.py</span>
+<span style="font-weight:bold;">+++ b/case2/file1.py</span>
 <span style="color:teal;">@@ -1,5 +1,5 @@</span>
  def message():
 <span style="color:red;">-    return &quot;case1 file1&quot;</span>
@@ -65,10 +65,10 @@ body {
  
  if __name__ == &quot;__main__&quot;:
      print(message())
-<span style="font-weight:bold;">diff --git a/tmp/tmp.sRqwlcqXum/dir1/file2.py b/tmp/tmp.sRqwlcqXum/dir2/file2.py</span>
+<span style="font-weight:bold;">diff --git a/case1/file2.py b/case2/file2.py</span>
 <span style="font-weight:bold;">index 4b55619..4ebfb32 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.sRqwlcqXum/dir1/file2.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.sRqwlcqXum/dir2/file2.py</span>
+<span style="font-weight:bold;">--- a/case1/file2.py</span>
+<span style="font-weight:bold;">+++ b/case2/file2.py</span>
 <span style="color:teal;">@@ -1,7 +1,7 @@</span>
 <span style="color:red;">-VALUE = 1</span>
 <span style="color:green;">+</span><span style="color:green;">VALUE = 2</span>
@@ -80,10 +80,10 @@ body {
  if __name__ == &quot;__main__&quot;:
 <span style="color:red;">-    print(double(VALUE))</span>
 <span style="color:green;">+</span><span style="color:green;">    print(double(1))</span>
-<span style="font-weight:bold;">diff --git a/tmp/tmp.sRqwlcqXum/dir1/file3.py b/tmp/tmp.sRqwlcqXum/dir2/file3.py</span>
+<span style="font-weight:bold;">diff --git a/case1/file3.py b/case2/file3.py</span>
 <span style="font-weight:bold;">index 9552088..ebf8077 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.sRqwlcqXum/dir1/file3.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.sRqwlcqXum/dir2/file3.py</span>
+<span style="font-weight:bold;">--- a/case1/file3.py</span>
+<span style="font-weight:bold;">+++ b/case2/file3.py</span>
 <span style="color:teal;">@@ -1,5 +1,5 @@</span>
  def greet(name):
 <span style="color:red;">-    return f&quot;Hello, {name}!&quot;</span>
@@ -102,7 +102,7 @@ body {
 
   // Collapsible sections
   document.querySelectorAll('pre').forEach(function(pre) {
-    var html = pre.innerHTML.replace(/tmp\/tmp[^\/]+\//g, '');
+    var html = pre.innerHTML;
     var parts = html.split(/(diff --git a\/\S+ b\/\S+)/);
     if (parts.length > 1) {
       var out = '';
