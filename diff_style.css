@@ -39,3 +39,9 @@ body {
 .section.open .content {
     display: block;
 }
+
+@media (min-width: 768px) {
+    body { font-size: 16px; }
+    .toggle { padding: 0.6em 0.8em; }
+    .content { margin-left: 2em; }
+}
