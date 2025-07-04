@@ -23,7 +23,8 @@ The script produces an HTML page where every file diff can be expanded or collap
 
 - `git` – for generating the diff.
 - `aha` – converts ANSI colored output to HTML.
-- Python 3 with the `jinja2` package – used by `assemble_diff.py`.
+- `python3` – install dependencies from [`requirements.txt`](requirements.txt)
+  with `pip install -r requirements.txt` (currently only `jinja2`).
 
 ## Files
 
