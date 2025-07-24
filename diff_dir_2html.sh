@@ -54,15 +54,26 @@ cd "$SCRIPT_DIR"
 tmpd=$(mktemp -d)
 trap 'rm -rf "$tmpd"' EXIT
 
-# Copy directories to temporary location and ignore common VCS metadata
+# Copy directories to temporary location, excluding untracked files
 R1="$tmpd/dir1"
 R2="$tmpd/dir2"
-rsync -a --delete \
-  --exclude='.git/' --exclude='.hg/' --exclude='.svn/' --exclude='.bzr/' --exclude='CVS/' \
-  "$DIR1/" "$R1/"
-rsync -a --delete \
-  --exclude='.git/' --exclude='.hg/' --exclude='.svn/' --exclude='.bzr/' --exclude='CVS/' \
-  "$DIR2/" "$R2/"
+
+rsync_dir() {
+  local src=$1
+  local dst=$2
+  local untracked_file="$tmpd/untracked.txt"
+  
+  # Get untracked files
+  git -C "$src" ls-files --others --exclude-standard > "$untracked_file"
+  
+  rsync -a --delete \
+    --exclude='.git/' --exclude='.hg/' --exclude='.svn/' --exclude='.bzr/' --exclude='CVS/' \
+    --exclude-from="$untracked_file" \
+    "$src/" "$dst/"
+}
+
+rsync_dir "$DIR1" "$R1"
+rsync_dir "$DIR2" "$R2"
 
 for e in "${EX[@]}"; do
   for root in "$R1" "$R2"; do
