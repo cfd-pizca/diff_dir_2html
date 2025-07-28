@@ -20,7 +20,6 @@ body {
     color: var(--zenburn-accent);
     border-left: 3px solid var(--zenburn-accent);
     transition: background 0.3s, color 0.3s;
-    word-break: break-all;
 }
 
 .toggle:hover {
@@ -30,17 +29,12 @@ body {
 
 .content {
     display: none;
+    margin-left: 1em;
     padding: 0.4em;
     background-color: #2b2b2b;
     color: var(--zenburn-muted);
     border-left: 2px solid var(--zenburn-highlight);
-    margin-left: 1em;
 }
-
-.section.root > .content { margin-left: 0; }
-.section.dir > .content { margin-left: 0.5em; }
-.section.file > .content { margin-left: 1em; }
-.section.hunk > .content { margin-left: 1.5em; }
 
 .section.open .content {
     display: block;
@@ -50,8 +44,4 @@ body {
     body { font-size: 16px; }
     .toggle { padding: 0.6em 0.8em; }
     .content { margin-left: 2em; }
-    .section.root > .content { margin-left: 0; }
-    .section.dir > .content { margin-left: 1em; }
-    .section.file > .content { margin-left: 2em; }
-    .section.hunk > .content { margin-left: 3em; }
 }

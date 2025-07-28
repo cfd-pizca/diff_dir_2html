@@ -17,7 +17,7 @@ Exclude patterns are applied after the directories are copied to a temporary loc
 Version control directories such as `.git/`, `.hg/`, `.svn/`, `.bzr/` and `CVS/` are skipped automatically to keep the diff free from repository metadata.
 Temporary paths are stripped from the diff output so that file references show the original directory names.
 
-The script produces an HTML page where directories, files and even individual hunks can be expanded or collapsed. Sections are nested to mirror the directory structure of the compared trees.
+The script produces an HTML page where every file diff can be expanded or collapsed individually.
 
 ## Requirements
 
@@ -34,10 +34,6 @@ The script produces an HTML page where directories, files and even individual hu
 - `diff_style.css` – minimal styles for the page.
 
 The HTML template `diff_template.html.j2` and optional stylesheet `diff_style.css` are expected to be present when invoking the script.
-
-### Collapsible hierarchy
-
-The HTML diff is organised to mirror the directory tree. Directories, files and even individual hunks are collapsible sections nested inside one another. The root directory is expanded by default so you can immediately browse the top-level files.
 
 ## Example and CI/CD
 
