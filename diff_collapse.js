@@ -9,10 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
       parts.forEach(function(chunk, i) {
         if (i % 2 === 1) {
           var headerLine = chunk;
-          var m = headerLine.match(/diff --git a\/(\S+) b\//);
+          var m = headerLine.match(/diff --git a\/([^\s]+) b\/[^\s]+/);
           var title = m ? m[1] : headerLine;
+          // Remove the first directory from the path if it exists
+          var displayPath = title.split('/').slice(1).join('/') || title;
           out += '<div class="section">'
-               + '<div class="toggle">' + title + '</div>'
+               + '<div class="toggle" title="' + title + '">' + displayPath + '</div>'
                + '<div class="content"><pre>' + headerLine + '</pre>';
         } else {
             out += '<pre>' + chunk + '</pre>';
