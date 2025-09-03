@@ -1,33 +1,125 @@
 document.addEventListener("DOMContentLoaded", function() {
-
-  // Collapsible sections
-  document.querySelectorAll('pre').forEach(function(pre) {
-    var html = pre.innerHTML;
-    var parts = html.split(/(diff --git a\/\S+ b\/\S+)/);
-    if (parts.length > 1) {
-      var out = '';
-      parts.forEach(function(chunk, i) {
-        if (i % 2 === 1) {
-          var headerLine = chunk;
-          var m = headerLine.match(/diff --git a\/([^\s]+) b\/[^\s]+/);
-          var title = m ? m[1] : headerLine;
-          // Remove the first directory from the path if it exists
-          var displayPath = title.split('/').slice(1).join('/') || title;
-          out += '<div class="section">'
-               + '<div class="toggle" title="' + title + '">' + displayPath + '</div>'
-               + '<div class="content"><pre>' + headerLine + '</pre>';
-        } else {
-            out += '<pre>' + chunk + '</pre>';
-            if (i > 1) out += '</div></div>';
+  // Helper function to create directory tree structure
+  function buildTree(diffSections) {
+    const root = { name: '', children: {}, files: [] };
+    
+    diffSections.forEach(section => {
+      const path = section.path.split('/');
+      let current = root;
+      
+      // Traverse or create directory structure
+      for (let i = 0; i < path.length - 1; i++) {
+        const dir = path[i];
+        if (!current.children[dir]) {
+          current.children[dir] = { name: dir, children: {}, files: [], parent: current };
         }
+        current = current.children[dir];
+      }
+      
+      // Add file to current directory
+      current.files.push(section);
+    });
+    
+    return root;
+  }
+  
+  // Render the directory tree to HTML
+  function renderTree(node, level = 0) {
+    let html = '';
+    const indent = '  '.repeat(level);
+    
+    // Render directories first
+    Object.entries(node.children)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([name, child]) => {
+        html += `${indent}<div class="directory">
+${indent}  <div class="dir-toggle" data-level="${level}">
+${indent}    <span class="dir-icon">📁</span> ${name}
+${indent}  </div>
+${indent}  <div class="dir-content">
+${indent}    ${renderTree(child, level + 1)}
+${indent}  </div>
+${indent}</div>`;
       });
-      pre.outerHTML = out;
-      document.querySelectorAll('.toggle').forEach(function(t) {
-        t.addEventListener('click', function() {
-          t.parentNode.classList.toggle('open');
-        });
-      });
+    
+    // Then render files
+    node.files.forEach(file => {
+      html += `${indent}<div class="file">
+${indent}  <div class="file-header" data-level="${level}">
+${indent}    <span class="file-icon">📄</span> ${file.path.split('/').pop()}
+${indent}  </div>
+${indent}  <div class="file-content">
+${indent}    <pre>${file.content}</pre>
+${indent}  </div>
+${indent}</div>`;
+    });
+    
+    return html;
+  }
+  
+  // Process all pre elements containing diff output
+  document.querySelectorAll('pre').forEach(function(pre) {
+    const html = pre.innerHTML;
+    const parts = html.split(/(diff --git a\/[^\s]+ b\/[^\s]+)/);
+    
+    if (parts.length > 1) {
+      const diffSections = [];
+      
+      // Parse diff sections
+      for (let i = 1; i < parts.length; i += 2) {
+        const headerLine = parts[i];
+        const content = parts[i + 1];
+        const m = headerLine.match(/diff --git a\/([^\s]+) b\/[^\s]+/);
+        
+        if (m) {
+          const path = m[1];
+          diffSections.push({
+            path: path,
+            content: headerLine + content
+          });
+        }
+      }
+      
+      // Build directory tree and render
+      const tree = buildTree(diffSections);
+      const renderedTree = renderTree(tree);
+      
+      // Create container and insert the tree
+      const container = document.createElement('div');
+      container.className = 'diff-container';
+      container.innerHTML = renderedTree;
+      
+      // Replace the original pre element
+      pre.replaceWith(container);
     }
   });
-
+  
+  // Add event listeners for directory toggles
+  document.addEventListener('click', function(e) {
+    const dirToggle = e.target.closest('.dir-toggle');
+    if (dirToggle) {
+      const dirContent = dirToggle.nextElementSibling;
+      dirContent.style.display = dirContent.style.display === 'none' ? 'block' : 'none';
+      dirToggle.classList.toggle('collapsed');
+      return;
+    }
+    
+    // Handle file toggles
+    const fileHeader = e.target.closest('.file-header');
+    if (fileHeader) {
+      const fileContent = fileHeader.nextElementSibling;
+      fileContent.style.display = fileContent.style.display === 'none' ? 'block' : 'none';
+      fileHeader.classList.toggle('collapsed');
+    }
+  });
+  
+  // Initialize all directories as expanded
+  document.querySelectorAll('.dir-content').forEach(el => {
+    el.style.display = 'block';
+  });
+  
+  // Initialize all file contents as collapsed
+  document.querySelectorAll('.file-content').forEach(el => {
+    el.style.display = 'none';
+  });
 });
