@@ -6,7 +6,7 @@
 <head>
   <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
   <meta charset="UTF-8">
-  <title>diff :: case1 (938cc9d8) :: case2 (938cc9d8)</title>
+  <title>diff :: case1 (ec2fd934) :: case2 (ec2fd934)</title>
   <style>:root {
     --zenburn-bg:       #3f3f3f;
     --zenburn-fg:       #dcdccc;
@@ -57,7 +57,7 @@ body {
 </style>
 </head>
 <body>
-  <h1>diff :: case1 (938cc9d8) :: case2 (938cc9d8)</h1>
+  <h1>diff :: case1 (ec2fd934) :: case2 (ec2fd934)</h1>
   <div id="diff-content">
     <pre>
       <span style="font-weight:bold;">diff --git a/case1/file1.py b/case2/file1.py</span>
@@ -115,10 +115,12 @@ body {
       parts.forEach(function(chunk, i) {
         if (i % 2 === 1) {
           var headerLine = chunk;
-          var m = headerLine.match(/diff --git a\/(\S+) b\//);
+          var m = headerLine.match(/diff --git a\/([^\s]+) b\/[^\s]+/);
           var title = m ? m[1] : headerLine;
+          // Remove the first directory from the path if it exists
+          var displayPath = title.split('/').slice(1).join('/') || title;
           out += '<div class="section">'
-               + '<div class="toggle">' + title + '</div>'
+               + '<div class="toggle" title="' + title + '">' + displayPath + '</div>'
                + '<div class="content"><pre>' + headerLine + '</pre>';
         } else {
             out += '<pre>' + chunk + '</pre>';
