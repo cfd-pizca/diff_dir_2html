@@ -92,13 +92,70 @@ pre {
 }
 
 /* Hunk styling */
-.hunk-header {
-    color: var(--zenburn-muted);
-    font-style: italic;
-    padding: 0.2em 0.6em;
-    background-color: #2a2a2a;
+.hunk {
     margin: 0.5em 0;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.hunk-header {
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+    background-color: #333;
+    color: var(--zenburn-fg);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #444;
+}
+
+.hunk-header:hover {
+    background-color: #3a3a3a;
+}
+
+.hunk-toggle {
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    color: var(--zenburn-muted);
+}
+
+.hunk-title {
+    font-weight: bold;
+    margin-right: 1em;
+    font-family: monospace;
+    color: var(--zenburn-accent);
+}
+
+.hunk-context {
+    color: var(--zenburn-muted);
+    font-family: monospace;
     font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.hunk-content {
+    background-color: #2a2a2a;
+    overflow-x: auto;
+}
+
+.diff-non-hunk {
+    margin: 0.5em 0;
+    padding: 0.5em;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.diff-non-hunk pre {
+    margin: 0;
+    padding: 0;
 }
 
 /* Responsive design */
@@ -135,4 +192,38 @@ pre {
 .diff-header {
     color: var(--zenburn-accent);
     font-weight: bold;
+    padding: 0.5em;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    margin: 0.5em 0;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Line numbers in diffs */
+.line-number {
+    color: var(--zenburn-muted);
+    user-select: none;
+    padding: 0 1em;
+    margin-right: 1em;
+    border-right: 1px solid #4a4a4a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hunk-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .hunk-title {
+        margin-right: 0;
+        margin-bottom: 0.3em;
+    }
+    
+    .hunk-context {
+        font-size: 0.8em;
+        width: 100%;
+    }
 }

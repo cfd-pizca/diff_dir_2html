@@ -51,12 +51,46 @@ ${indent}</div>`;
     
     // Then render files
     node.files.forEach(file => {
+      // Render file header and content
       html += `${indent}<div class="file">
 ${indent}  <div class="file-header" data-level="${level}">
 ${indent}    <span class="file-icon">📄</span> ${file.path.split('/').pop()}
 ${indent}  </div>
 ${indent}  <div class="file-content">
-${indent}    <pre>${file.content}</pre>
+${indent}    <div class="diff-header">${file.content}</div>`;
+      
+      // Render hunks if they exist
+      if (file.hunks && file.hunks.length > 0) {
+        file.hunks.forEach((hunk, index) => {
+          if (hunk.isHunk) {
+            // Render hunk header and content
+            html += `
+${indent}    <div class="hunk">
+${indent}      <div class="hunk-header">
+${indent}        <span class="hunk-toggle">▶</span>
+${indent}        <span class="hunk-title">Hunk starting at line ${hunk.startLine}</span>
+${indent}        <span class="hunk-context">${hunk.header}</span>
+${indent}      </div>
+${indent}      <div class="hunk-content">
+${indent}        <pre>${hunk.content}</pre>
+${indent}      </div>
+${indent}    </div>`;
+          } else {
+            // Render non-hunk content (usually the diff header)
+            html += `
+${indent}    <div class="diff-non-hunk">
+${indent}      <pre>${hunk.content}</pre>
+${indent}    </div>`;
+          }
+        });
+      } else {
+        // Fallback for files without hunks
+        html += `
+${indent}    <pre>${file.content}</pre>`;
+      }
+      
+      // Close file content and file divs
+      html += `
 ${indent}  </div>
 ${indent}</div>`;
     });
@@ -79,11 +113,51 @@ ${indent}</div>`;
         const m = headerLine.match(/diff --git a\/([^\s]+) b\/([^\s]+)/);
         
         if (m) {
+          // Parse hunks from content
+          const hunkRegex = /(@@[^@]*@@)([\s\S]*?)(?=@@|$)/g;
+          const hunks = [];
+          let hunkMatch;
+          let lastIndex = 0;
+          
+          // Extract all hunks
+          while ((hunkMatch = hunkRegex.exec(content)) !== null) {
+            const hunkHeader = hunkMatch[1];
+            const hunkContent = hunkMatch[2];
+            const hunkStart = hunkMatch.index;
+            
+            // Add any content before the first hunk
+            if (hunks.length === 0 && hunkStart > 0) {
+              hunks.push({
+                isHunk: false,
+                content: content.substring(0, hunkStart)
+              });
+            }
+            
+            // Add the hunk
+            hunks.push({
+              isHunk: true,
+              header: hunkHeader,
+              content: hunkContent,
+              startLine: hunkHeader.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/)[1]
+            });
+            
+            lastIndex = hunkRegex.lastIndex;
+          }
+          
+          // Add any remaining content after the last hunk
+          if (lastIndex < content.length) {
+            hunks.push({
+              isHunk: false,
+              content: content.substring(lastIndex)
+            });
+          }
+          
           // Use the path from side 'a' for the tree structure
           const path = m[1];
           diffSections.push({
             path: path,
-            content: headerLine + content,
+            content: headerLine,
+            hunks: hunks,
             // Store both paths for reference
             pathA: m[1],
             pathB: m[2]
@@ -105,8 +179,9 @@ ${indent}</div>`;
     }
   });
   
-  // Add event listeners for directory toggles
+  // Add event listeners for toggles
   document.addEventListener('click', function(e) {
+    // Directory toggles
     const dirToggle = e.target.closest('.dir-toggle');
     if (dirToggle) {
       const dirContent = dirToggle.nextElementSibling;
@@ -115,12 +190,24 @@ ${indent}</div>`;
       return;
     }
     
-    // Handle file toggles
+    // File toggles
     const fileHeader = e.target.closest('.file-header');
     if (fileHeader) {
       const fileContent = fileHeader.nextElementSibling;
       fileContent.style.display = fileContent.style.display === 'none' ? 'block' : 'none';
       fileHeader.classList.toggle('collapsed');
+      return;
+    }
+    
+    // Hunk toggles
+    const hunkHeader = e.target.closest('.hunk-header');
+    if (hunkHeader) {
+      const hunkContent = hunkHeader.nextElementSibling;
+      const toggleIcon = hunkHeader.querySelector('.hunk-toggle');
+      hunkContent.style.display = hunkContent.style.display === 'none' ? 'block' : 'none';
+      hunkHeader.classList.toggle('collapsed');
+      toggleIcon.textContent = hunkContent.style.display === 'none' ? '▶' : '▼';
+      return;
     }
   });
   
@@ -131,6 +218,11 @@ ${indent}</div>`;
   
   // Initialize all file contents as collapsed
   document.querySelectorAll('.file-content').forEach(el => {
+    el.style.display = 'none';
+  });
+  
+  // Initialize all hunk contents as collapsed
+  document.querySelectorAll('.hunk-content').forEach(el => {
     el.style.display = 'none';
   });
 });
