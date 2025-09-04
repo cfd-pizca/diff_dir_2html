@@ -13,6 +13,22 @@ extended regular expression.
 - `<dir1>` and `<dir2>` are the directories to compare.
 - `[output]` optional path to the resulting HTML file. If omitted, the file is named `diff_<dir1>_<dir2>.html` in the current directory. If the path ends with `/`, the directory is created and the filename is generated automatically. Commit hashes for each directory appear in the page header instead of the filename.
 
+⚠️ **Important Note**
+
+**Files will not be included in the generated HTML diff unless they are at least staged in git.** This is because `git diff --no-index` only shows differences for files that are tracked by git. To ensure all files are included in the diff:
+
+1. Make sure your files are added to git (staged):
+   ```bash
+   git add <file>  # For specific files
+   # or
+   git add .        # For all files in the current directory
+   ```
+
+2. Then run the diff tool:
+   ```bash
+   ./diff_dir_2html.sh dir1/ dir2/ output.html
+   ```
+
 Exclude patterns are applied after the directories are copied to a temporary location, so files matching the patterns do not appear in the diff.
 Version control directories such as `.git/`, `.hg/`, `.svn/`, `.bzr/` and `CVS/` are skipped automatically to keep the diff free from repository metadata.
 Temporary paths are stripped from the diff output so that file references show the original directory names.

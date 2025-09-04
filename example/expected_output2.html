@@ -242,43 +242,147 @@ pre {
   <h1>diff :: case1 (fc542da0) :: case2 (fc542da0)</h1>
   <div id="diff-content">
     <pre>
-      <span style="font-weight:bold;">diff --git a/case1/file1.py b/case2/file1.py</span>
-<span style="font-weight:bold;">index 3b7ee30..b018139 100644</span>
-<span style="font-weight:bold;">--- a/case1/file1.py</span>
-<span style="font-weight:bold;">+++ b/case2/file1.py</span>
-<span style="color:teal;">@@ -1,5 +1,5 @@</span>
- def message():
-<span style="color:red;">-    return &quot;case1 file1&quot;</span>
-<span style="color:green;">+</span><span style="color:green;">    return &quot;case2 file1&quot;</span>
+      <span style="font-weight:bold;">diff --git a/case1/config/settings.json b/case2/config/settings.json</span>
+<span style="font-weight:bold;">index 07a695a..b217ebb 100644</span>
+<span style="font-weight:bold;">--- a/case1/config/settings.json</span>
+<span style="font-weight:bold;">+++ b/case2/config/settings.json</span>
+<span style="color:teal;">@@ -1,17 +1,19 @@</span>
+ {
+<span style="color:red;">-    &quot;app_name&quot;: &quot;Math App&quot;,</span>
+<span style="color:red;">-    &quot;version&quot;: &quot;1.0.0&quot;,</span>
+<span style="color:red;">-    &quot;debug&quot;: true,</span>
+<span style="color:red;">-    &quot;max_history&quot;: 10,</span>
+<span style="color:red;">-    &quot;precision&quot;: 2,</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;app_name&quot;: &quot;Math App Pro&quot;,</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;version&quot;: &quot;1.1.0&quot;,</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;debug&quot;: false,</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;max_history&quot;: 20,</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;precision&quot;: 4,</span>
+     &quot;theme&quot;: {
+<span style="color:red;">-        &quot;primary_color&quot;: &quot;#3498db&quot;,</span>
+<span style="color:red;">-        &quot;secondary_color&quot;: &quot;#2ecc71&quot;,</span>
+<span style="color:red;">-        &quot;font_family&quot;: &quot;Arial, sans-serif&quot;</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;primary_color&quot;: &quot;#2980b9&quot;,</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;secondary_color&quot;: &quot;#27ae60&quot;,</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;font_family&quot;: &quot;'Segoe UI', Arial, sans-serif&quot;</span>
+     },
+     &quot;features&quot;: {
+<span style="color:red;">-        &quot;scientific_mode&quot;: false,</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;scientific_mode&quot;: true,</span>
+         &quot;history_tracking&quot;: true,
+<span style="color:red;">-        &quot;unit_conversion&quot;: false</span>
+<span style="color:red;">-    }</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;unit_conversion&quot;: true,</span>
+<span style="color:green;">+</span><span style="color:green;">        &quot;dark_mode&quot;: true</span>
+<span style="color:green;">+</span><span style="color:green;">    },</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;default_view&quot;: &quot;scientific&quot;</span>
+ }
+<span style="font-weight:bold;">diff --git a/case1/main.py b/case2/main.py</span>
+<span style="font-weight:bold;">index e7d28bb..e025cef 100644</span>
+<span style="font-weight:bold;">--- a/case1/main.py</span>
+<span style="font-weight:bold;">+++ b/case2/main.py</span>
+<span style="color:teal;">@@ -1,20 +1,20 @@</span>
+ #!/usr/bin/env python3
+ &quot;&quot;&quot;
+<span style="color:red;">-Basic Calculator Application</span>
+<span style="color:red;">-A simple command-line calculator for basic arithmetic operations.</span>
+<span style="color:green;">+</span><span style="color:green;">Enhanced Calculator Application</span>
+<span style="color:green;">+</span><span style="color:green;">A simple command-line calculator with basic arithmetic operations.</span>
+ &quot;&quot;&quot;
  
- if __name__ == &quot;__main__&quot;:
-     print(message())
-<span style="font-weight:bold;">diff --git a/case1/file2.py b/case2/file2.py</span>
-<span style="font-weight:bold;">index 4b55619..4ebfb32 100644</span>
-<span style="font-weight:bold;">--- a/case1/file2.py</span>
-<span style="font-weight:bold;">+++ b/case2/file2.py</span>
-<span style="color:teal;">@@ -1,7 +1,7 @@</span>
-<span style="color:red;">-VALUE = 1</span>
-<span style="color:green;">+</span><span style="color:green;">VALUE = 2</span>
+ import json
+ import sys
+<span style="color:red;">-from math_operations.calculator import add, subtract, multiply, divide</span>
+<span style="color:green;">+</span><span style="color:green;">from math_operations.calculator import add, subtract, multiply, divide, power</span>
  
- def double(x):
-<span style="color:red;">-    return x * 2</span>
-<span style="color:green;">+</span><span style="color:green;">    return x * 2 + VALUE</span>
+ def load_config():
+<span style="color:red;">-    &quot;&quot;&quot;Load application configuration.&quot;&quot;&quot;</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;&quot;&quot;Load application configuration with error handling.&quot;&quot;&quot;</span>
+     try:
+         with open('config/settings.json', 'r') as f:
+             return json.load(f)
+     except FileNotFoundError:
+<span style="color:red;">-        print(&quot;Error: Configuration file not found&quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">        print(&quot;Error: Could not find configuration file&quot;)</span>
+         sys.exit(1)
  
- if __name__ == &quot;__main__&quot;:
-<span style="color:red;">-    print(double(VALUE))</span>
-<span style="color:green;">+</span><span style="color:green;">    print(double(1))</span>
-<span style="font-weight:bold;">diff --git a/case1/file3.py b/case2/file3.py</span>
-<span style="font-weight:bold;">index 9552088..ebf8077 100644</span>
-<span style="font-weight:bold;">--- a/case1/file3.py</span>
-<span style="font-weight:bold;">+++ b/case2/file3.py</span>
-<span style="color:teal;">@@ -1,5 +1,5 @@</span>
- def greet(name):
-<span style="color:red;">-    return f&quot;Hello, {name}!&quot;</span>
-<span style="color:green;">+</span><span style="color:green;">    return f&quot;Hi, {name}!&quot;</span>
+ def get_number(prompt):
+<span style="color:teal;">@@ -32,7 +32,8 @@</span> def show_menu():
+     print(&quot;2. Subtract&quot;)
+     print(&quot;3. Multiply&quot;)
+     print(&quot;4. Divide&quot;)
+<span style="color:red;">-    print(&quot;5. Exit&quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">    print(&quot;5. Power (a^b)&quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">    print(&quot;6. Exit&quot;)</span>
  
- if __name__ == &quot;__main__&quot;:
-     print(greet(&quot;World&quot;))
+ def perform_operation(operation, a, b, precision):
+     &quot;&quot;&quot;Perform the requested operation and return the result.&quot;&quot;&quot;
+<span style="color:teal;">@@ -44,6 +45,8 @@</span> def perform_operation(operation, a, b, precision):
+         return multiply(a, b)
+     elif operation == '4':
+         return divide(a, b)
+<span style="color:green;">+</span><span style="color:green;">    elif operation == '5':</span>
+<span style="color:green;">+</span><span style="color:green;">        return power(a, b)</span>
+     return None
+ 
+ def main():
+<span style="color:teal;">@@ -51,21 +54,24 @@</span> def main():
+     config = load_config()
+     print(f&quot;=== {config['app_name']} v{config['version']} ===&quot;)
+     
+<span style="color:green;">+</span><span style="color:green;">    if config.get('features', {}).get('dark_mode', False):</span>
+<span style="color:green;">+</span><span style="color:green;">        print(&quot;Dark mode: Enabled&quot;)</span>
+<span style="color:green;">+</span><span style="background-color:red;">    </span>
+     while True:
+         show_menu()
+<span style="color:red;">-        choice = input(&quot;\nSelect an operation (1-5): &quot;).strip()</span>
+<span style="color:green;">+</span><span style="color:green;">        choice = input(&quot;\nSelect an operation (1-6): &quot;).strip()</span>
+         
+<span style="color:red;">-        if choice == '5':</span>
+<span style="color:red;">-            print(&quot;\nThank you for using the calculator. Goodbye!&quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">        if choice == '6':</span>
+<span style="color:green;">+</span><span style="color:green;">            print(&quot;\nThank you for using the enhanced calculator. Goodbye!&quot;)</span>
+             break
+             
+<span style="color:red;">-        if choice not in ['1', '2', '3', '4']:</span>
+<span style="color:green;">+</span><span style="color:green;">        if choice not in ['1', '2', '3', '4', '5']:</span>
+             print(&quot;Error: Invalid choice. Please try again.&quot;)
+             continue
+             
+         try:
+             a = get_number(&quot;\nEnter first number: &quot;)
+<span style="color:red;">-            b = get_number(&quot;Enter second number: &quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">            b = get_number(&quot;Enter second number: &quot;) if choice != '5' else get_number(&quot;Enter exponent: &quot;)</span>
+             
+             result = perform_operation(choice, a, b, config['precision'])
+             if result is not None:
+<span style="font-weight:bold;">diff --git a/case1/math_operations/calculator.py b/case2/math_operations/calculator.py</span>
+<span style="font-weight:bold;">index b24492b..2415c5e 100644</span>
+<span style="font-weight:bold;">--- a/case1/math_operations/calculator.py</span>
+<span style="font-weight:bold;">+++ b/case2/math_operations/calculator.py</span>
+<span style="color:teal;">@@ -20,14 +20,18 @@</span> def divide(a: float, b: float) -&gt; float:
+     
+     Args:
+         a: Numerator
+<span style="color:red;">-        b: Denominator (must not be zero)</span>
+<span style="color:green;">+</span><span style="color:green;">        b: Denominator (must be non-zero)</span>
+         
+     Returns:
+<span style="color:red;">-        Result of division</span>
+<span style="color:green;">+</span><span style="color:green;">        float: Result of division</span>
+         
+     Raises:
+<span style="color:red;">-        ValueError: If b is zero</span>
+<span style="color:green;">+</span><span style="color:green;">        ZeroDivisionError: If b is zero</span>
+     &quot;&quot;&quot;
+     if b == 0:
+<span style="color:red;">-        raise ValueError(&quot;Cannot divide by zero&quot;)</span>
+<span style="color:green;">+</span><span style="color:green;">        raise ZeroDivisionError(&quot;Cannot divide by zero&quot;)</span>
+     return a / b
+<span style="color:green;">+</span>
+<span style="color:green;">+</span><span style="color:green;">def power(base: float, exponent: float) -&gt; float:</span>
+<span style="color:green;">+</span><span style="color:green;">    &quot;&quot;&quot;Calculate base raised to the power of exponent.&quot;&quot;&quot;</span>
+<span style="color:green;">+</span><span style="color:green;">    return base ** exponent</span>
 
     </pre>
   </div>

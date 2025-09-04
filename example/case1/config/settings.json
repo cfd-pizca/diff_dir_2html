@@ -1,0 +1,17 @@
+{
+    "app_name": "Math App",
+    "version": "1.0.0",
+    "debug": true,
+    "max_history": 10,
+    "precision": 2,
+    "theme": {
+        "primary_color": "#3498db",
+        "secondary_color": "#2ecc71",
+        "font_family": "Arial, sans-serif"
+    },
+    "features": {
+        "scientific_mode": false,
+        "history_tracking": true,
+        "unit_conversion": false
+    }
+}

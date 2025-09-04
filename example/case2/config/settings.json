@@ -1,0 +1,19 @@
+{
+    "app_name": "Math App Pro",
+    "version": "1.1.0",
+    "debug": false,
+    "max_history": 20,
+    "precision": 4,
+    "theme": {
+        "primary_color": "#2980b9",
+        "secondary_color": "#27ae60",
+        "font_family": "'Segoe UI', Arial, sans-serif"
+    },
+    "features": {
+        "scientific_mode": true,
+        "history_tracking": true,
+        "unit_conversion": true,
+        "dark_mode": true
+    },
+    "default_view": "scientific"
+}
