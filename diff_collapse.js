@@ -4,8 +4,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const root = { name: '', children: {}, files: [] };
     
     diffSections.forEach(section => {
-      const path = section.path.split('/');
+      // Skip the first directory (a/ or b/) and process the rest
+      const path = section.path.split('/').slice(1);
       let current = root;
+      
+      // If no path left after removing the first part, it's a file in the root
+      if (path.length === 0) {
+        root.files.push(section);
+        return;
+      }
       
       // Traverse or create directory structure
       for (let i = 0; i < path.length - 1; i++) {
@@ -69,13 +76,17 @@ ${indent}</div>`;
       for (let i = 1; i < parts.length; i += 2) {
         const headerLine = parts[i];
         const content = parts[i + 1];
-        const m = headerLine.match(/diff --git a\/([^\s]+) b\/[^\s]+/);
+        const m = headerLine.match(/diff --git a\/([^\s]+) b\/([^\s]+)/);
         
         if (m) {
+          // Use the path from side 'a' for the tree structure
           const path = m[1];
           diffSections.push({
             path: path,
-            content: headerLine + content
+            content: headerLine + content,
+            // Store both paths for reference
+            pathA: m[1],
+            pathB: m[2]
           });
         }
       }
