@@ -6,58 +6,246 @@
 <head>
   <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
   <meta charset="UTF-8">
-  <title>diff :: case1 :: case2</title>
+  <title>diff :: case1 (f5a7f581) :: case2 (f5a7f581)</title>
   <style>:root {
     --zenburn-bg:       #3f3f3f;
     --zenburn-fg:       #dcdccc;
     --zenburn-highlight:#6f6f6f;
     --zenburn-accent:   #f0dfaf;
     --zenburn-muted:    #9fafaf;
+    --indent-size:      1.5em;
 }
 
 body {
     color: var(--zenburn-fg);
     background-color: var(--zenburn-bg);
-    font-family: sans-serif;
+    font-family: monospace;
+    line-height: 1.4;
+    margin: 0;
+    padding: 1em;
 }
 
-.toggle {
+.diff-container {
+    margin: 1em 0;
+}
+
+/* Directory and file containers */
+.directory, .file {
+    margin: 0.2em 0;
+}
+
+/* Directory styling */
+.dir-toggle {
     cursor: pointer;
-    display: block;
-    background: var(--zenburn-highlight);
     padding: 0.4em 0.6em;
-    color: var(--zenburn-accent);
+    background-color: #4a4a4a;
     border-left: 3px solid var(--zenburn-accent);
-    transition: background 0.3s, color 0.3s;
+    margin: 0.2em 0;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
 }
 
-.toggle:hover {
-    background: #5f5f5f;
+.dir-toggle:hover {
+    background-color: #5a5a5a;
+}
+
+.dir-toggle .dir-icon {
+    margin-right: 0.5em;
+}
+
+.dir-content {
+    margin-left: var(--indent-size);
+    border-left: 1px dashed #5a5a5a;
+    padding-left: 0.5em;
+}
+
+/* File styling */
+.file-header {
+    cursor: pointer;
+    padding: 0.4em 0.6em;
+    background-color: #3a3a3a;
+    border-left: 2px solid #6a6a6a;
+    margin: 0.2em 0;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.file-header:hover {
+    background-color: #4a4a4a;
+}
+
+.file-header .file-icon {
+    margin-right: 0.5em;
+}
+
+.file-content {
+    margin-left: var(--indent-size);
+    padding: 0.5em 0;
+}
+
+/* Diff content styling */
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+/* Collapsed state */
+.dir-content.collapsed,
+.file-content.collapsed {
+    display: none;
+}
+
+/* Hunk styling */
+.hunk {
+    margin: 0.5em 0;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.hunk-header {
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+    background-color: #333;
+    color: var(--zenburn-fg);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #444;
+}
+
+.hunk-header:hover {
+    background-color: #3a3a3a;
+}
+
+.hunk-toggle {
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    color: var(--zenburn-muted);
+}
+
+.hunk-title {
+    font-weight: bold;
+    margin-right: 1em;
+    font-family: monospace;
+    color: var(--zenburn-accent);
+}
+
+.hunk-context {
+    color: var(--zenburn-muted);
+    font-family: monospace;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.hunk-content {
+    background-color: #2a2a2a;
+    overflow-x: auto;
+}
+
+.diff-non-hunk {
+    margin: 0.5em 0;
+    padding: 0.5em;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.diff-non-hunk pre {
+    margin: 0;
+    padding: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    :root {
+        --indent-size: 1em;
+    }
+    
+    body {
+        font-size: 14px;
+        padding: 0.5em;
+    }
+    
+    .dir-toggle, .file-header {
+        padding: 0.3em 0.5em;
+    }
+}
+
+/* Diff colors */
+.diff-added {
+    color: #5f9f5f;
+    background-color: #2a3a2a;
+}
+
+.diff-removed {
+    color: #cc6666;
+    background-color: #3a2a2a;
+}
+
+.diff-context {
     color: var(--zenburn-fg);
 }
 
-.content {
-    display: none;
-    margin-left: 1em;
-    padding: 0.4em;
-    background-color: #2b2b2b;
-    color: var(--zenburn-muted);
-    border-left: 2px solid var(--zenburn-highlight);
+.diff-header {
+    color: var(--zenburn-accent);
+    font-weight: bold;
+    padding: 0.5em;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    margin: 0.5em 0;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
 }
 
-.section.open .content {
-    display: block;
+/* Line numbers in diffs */
+.line-number {
+    color: var(--zenburn-muted);
+    user-select: none;
+    padding: 0 1em;
+    margin-right: 1em;
+    border-right: 1px solid #4a4a4a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hunk-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .hunk-title {
+        margin-right: 0;
+        margin-bottom: 0.3em;
+    }
+    
+    .hunk-context {
+        font-size: 0.8em;
+        width: 100%;
+    }
 }
 </style>
 </head>
 <body>
-  <h1>diff :: case1 :: case2</h1>
+  <h1>diff :: case1 (f5a7f581) :: case2 (f5a7f581)</h1>
   <div id="diff-content">
     <pre>
-      <span style="font-weight:bold;">diff --git a/tmp/tmp.YX1O6JRHOz/dir1/file1.py b/tmp/tmp.YX1O6JRHOz/dir2/file1.py</span>
+      <span style="font-weight:bold;">diff --git a/case1/file1.py b/case2/file1.py</span>
 <span style="font-weight:bold;">index 3b7ee30..b018139 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.YX1O6JRHOz/dir1/file1.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.YX1O6JRHOz/dir2/file1.py</span>
+<span style="font-weight:bold;">--- a/case1/file1.py</span>
+<span style="font-weight:bold;">+++ b/case2/file1.py</span>
 <span style="color:teal;">@@ -1,5 +1,5 @@</span>
  def message():
 <span style="color:red;">-    return &quot;case1 file1&quot;</span>
@@ -65,10 +253,10 @@ body {
  
  if __name__ == &quot;__main__&quot;:
      print(message())
-<span style="font-weight:bold;">diff --git a/tmp/tmp.YX1O6JRHOz/dir1/file2.py b/tmp/tmp.YX1O6JRHOz/dir2/file2.py</span>
+<span style="font-weight:bold;">diff --git a/case1/file2.py b/case2/file2.py</span>
 <span style="font-weight:bold;">index 4b55619..4ebfb32 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.YX1O6JRHOz/dir1/file2.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.YX1O6JRHOz/dir2/file2.py</span>
+<span style="font-weight:bold;">--- a/case1/file2.py</span>
+<span style="font-weight:bold;">+++ b/case2/file2.py</span>
 <span style="color:teal;">@@ -1,7 +1,7 @@</span>
 <span style="color:red;">-VALUE = 1</span>
 <span style="color:green;">+</span><span style="color:green;">VALUE = 2</span>
@@ -80,10 +268,10 @@ body {
  if __name__ == &quot;__main__&quot;:
 <span style="color:red;">-    print(double(VALUE))</span>
 <span style="color:green;">+</span><span style="color:green;">    print(double(1))</span>
-<span style="font-weight:bold;">diff --git a/tmp/tmp.YX1O6JRHOz/dir1/file3.py b/tmp/tmp.YX1O6JRHOz/dir2/file3.py</span>
+<span style="font-weight:bold;">diff --git a/case1/file3.py b/case2/file3.py</span>
 <span style="font-weight:bold;">index 9552088..ebf8077 100644</span>
-<span style="font-weight:bold;">--- a/tmp/tmp.YX1O6JRHOz/dir1/file3.py</span>
-<span style="font-weight:bold;">+++ b/tmp/tmp.YX1O6JRHOz/dir2/file3.py</span>
+<span style="font-weight:bold;">--- a/case1/file3.py</span>
+<span style="font-weight:bold;">+++ b/case2/file3.py</span>
 <span style="color:teal;">@@ -1,5 +1,5 @@</span>
  def greet(name):
 <span style="color:red;">-    return f&quot;Hello, {name}!&quot;</span>
@@ -99,35 +287,237 @@ body {
     
   </footer>
   <script>document.addEventListener("DOMContentLoaded", function() {
-
-  // Collapsible sections
-  document.querySelectorAll('pre').forEach(function(pre) {
-    var html = pre.innerHTML.replace(/tmp\/tmp[^\/]+\//g, '');
-    var parts = html.split(/(diff --git a\/\S+ b\/\S+)/);
-    if (parts.length > 1) {
-      var out = '';
-      parts.forEach(function(chunk, i) {
-        if (i % 2 === 1) {
-          var headerLine = chunk;
-          var m = headerLine.match(/diff --git a\/(\S+) b\//);
-          var title = m ? m[1] : headerLine;
-          out += '<div class="section">'
-               + '<div class="toggle">' + title + '</div>'
-               + '<div class="content"><pre>' + headerLine + '</pre>';
-        } else {
-            out += '<pre>' + chunk + '</pre>';
-            if (i > 1) out += '</div></div>';
+  // Helper function to create directory tree structure
+  function buildTree(diffSections) {
+    const root = { name: '', children: {}, files: [] };
+    
+    diffSections.forEach(section => {
+      // Skip the first directory (a/ or b/) and process the rest
+      const path = section.path.split('/').slice(1);
+      let current = root;
+      
+      // If no path left after removing the first part, it's a file in the root
+      if (path.length === 0) {
+        root.files.push(section);
+        return;
+      }
+      
+      // Traverse or create directory structure
+      for (let i = 0; i < path.length - 1; i++) {
+        const dir = path[i];
+        if (!current.children[dir]) {
+          current.children[dir] = { name: dir, children: {}, files: [], parent: current };
         }
+        current = current.children[dir];
+      }
+      
+      // Add file to current directory
+      current.files.push(section);
+    });
+    
+    return root;
+  }
+  
+  // Render the directory tree to HTML
+  function renderTree(node, level = 0) {
+    let html = '';
+    const indent = '  '.repeat(level);
+    
+    // Render directories first
+    Object.entries(node.children)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([name, child]) => {
+        html += `${indent}<div class="directory">
+${indent}  <div class="dir-toggle" data-level="${level}">
+${indent}    <span class="dir-icon">📁</span> ${name}
+${indent}  </div>
+${indent}  <div class="dir-content">
+${indent}    ${renderTree(child, level + 1)}
+${indent}  </div>
+${indent}</div>`;
       });
-      pre.outerHTML = out;
-      document.querySelectorAll('.toggle').forEach(function(t) {
-        t.addEventListener('click', function() {
-          t.parentNode.classList.toggle('open');
+    
+    // Then render files
+    node.files.forEach(file => {
+      // Render file header and content
+      html += `${indent}<div class="file">
+${indent}  <div class="file-header" data-level="${level}">
+${indent}    <span class="file-icon">📄</span> ${file.path.split('/').pop()}
+${indent}  </div>
+${indent}  <div class="file-content">
+${indent}    <div class="diff-header">${file.content}</div>`;
+      
+      // Render hunks if they exist
+      if (file.hunks && file.hunks.length > 0) {
+        file.hunks.forEach((hunk, index) => {
+          if (hunk.isHunk) {
+            // Render hunk header and content
+            html += `
+${indent}    <div class="hunk">
+${indent}      <div class="hunk-header">
+${indent}        <span class="hunk-toggle">▶</span>
+${indent}        <span class="hunk-title">Hunk starting at line ${hunk.startLine}</span>
+${indent}        <span class="hunk-context">${hunk.header}</span>
+${indent}      </div>
+${indent}      <div class="hunk-content">
+${indent}        <pre>${hunk.content}</pre>
+${indent}      </div>
+${indent}    </div>`;
+          } else {
+            // Render non-hunk content (usually the diff header)
+            html += `
+${indent}    <div class="diff-non-hunk">
+${indent}      <pre>${hunk.content}</pre>
+${indent}    </div>`;
+          }
         });
-      });
+      } else {
+        // Fallback for files without hunks
+        html += `
+${indent}    <pre>${file.content}</pre>`;
+      }
+      
+      // Close file content and file divs
+      html += `
+${indent}  </div>
+${indent}</div>`;
+    });
+    
+    return html;
+  }
+  
+  // Process all pre elements containing diff output
+  document.querySelectorAll('pre').forEach(function(pre) {
+    const html = pre.innerHTML;
+    const parts = html.split(/(diff --git a\/[^\s]+ b\/[^\s]+)/);
+    
+    if (parts.length > 1) {
+      const diffSections = [];
+      
+      // Parse diff sections
+      for (let i = 1; i < parts.length; i += 2) {
+        const headerLine = parts[i];
+        const content = parts[i + 1];
+        const m = headerLine.match(/diff --git a\/([^\s]+) b\/([^\s]+)/);
+        
+        if (m) {
+          // Parse hunks from content
+          const hunkRegex = /(@@[^@]*@@)([\s\S]*?)(?=@@|$)/g;
+          const hunks = [];
+          let hunkMatch;
+          let lastIndex = 0;
+          
+          // Extract all hunks
+          while ((hunkMatch = hunkRegex.exec(content)) !== null) {
+            const hunkHeader = hunkMatch[1];
+            const hunkContent = hunkMatch[2];
+            const hunkStart = hunkMatch.index;
+            
+            // Add any content before the first hunk
+            if (hunks.length === 0 && hunkStart > 0) {
+              hunks.push({
+                isHunk: false,
+                content: content.substring(0, hunkStart)
+              });
+            }
+            
+            // Add the hunk
+            hunks.push({
+              isHunk: true,
+              header: hunkHeader,
+              content: hunkContent,
+              startLine: hunkHeader.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/)[1]
+            });
+            
+            lastIndex = hunkRegex.lastIndex;
+          }
+          
+          // Add any remaining content after the last hunk
+          if (lastIndex < content.length) {
+            hunks.push({
+              isHunk: false,
+              content: content.substring(lastIndex)
+            });
+          }
+          
+          // Use the path from side 'a' for the tree structure
+          const path = m[1];
+          diffSections.push({
+            path: path,
+            content: headerLine,
+            hunks: hunks,
+            // Store both paths for reference
+            pathA: m[1],
+            pathB: m[2]
+          });
+        }
+      }
+      
+      // Build directory tree and render
+      const tree = buildTree(diffSections);
+      const renderedTree = renderTree(tree);
+      
+      // Create container and insert the tree
+      const container = document.createElement('div');
+      container.className = 'diff-container';
+      container.innerHTML = renderedTree;
+      
+      // Replace the original pre element
+      pre.replaceWith(container);
     }
   });
-
+  
+  // Add event listeners for toggles
+  document.addEventListener('click', function(e) {
+    // Directory toggles
+    const dirToggle = e.target.closest('.dir-toggle');
+    if (dirToggle) {
+      const dirContent = dirToggle.nextElementSibling;
+      dirContent.style.display = dirContent.style.display === 'none' ? 'block' : 'none';
+      dirToggle.classList.toggle('collapsed');
+      return;
+    }
+    
+    // File toggles
+    const fileHeader = e.target.closest('.file-header');
+    if (fileHeader) {
+      const fileContent = fileHeader.nextElementSibling;
+      fileContent.style.display = fileContent.style.display === 'none' ? 'block' : 'none';
+      fileHeader.classList.toggle('collapsed');
+      return;
+    }
+    
+    // Hunk toggles
+    const hunkHeader = e.target.closest('.hunk-header');
+    if (hunkHeader) {
+      const hunkContent = hunkHeader.nextElementSibling;
+      const toggleIcon = hunkHeader.querySelector('.hunk-toggle');
+      hunkContent.style.display = hunkContent.style.display === 'none' ? 'block' : 'none';
+      hunkHeader.classList.toggle('collapsed');
+      toggleIcon.textContent = hunkContent.style.display === 'none' ? '▶' : '▼';
+      return;
+    }
+  });
+  
+  // Initialize all directories as expanded
+  document.querySelectorAll('.dir-content').forEach(el => {
+    el.style.display = 'block';
+  });
+  
+  // Initialize all file contents as collapsed
+  document.querySelectorAll('.file-content').forEach(el => {
+    el.style.display = 'none';
+  });
+  
+  // Initialize all hunk contents as expanded
+  document.querySelectorAll('.hunk-content').forEach(el => {
+    el.style.display = 'block';
+    const header = el.previousElementSibling;
+    const toggleIcon = header?.querySelector('.hunk-toggle');
+    if (toggleIcon) {
+      toggleIcon.textContent = '▼';
+    }
+  });
 });
 </script>
 </body>
