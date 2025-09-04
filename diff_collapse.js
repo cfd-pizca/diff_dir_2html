@@ -221,8 +221,13 @@ ${indent}</div>`;
     el.style.display = 'none';
   });
   
-  // Initialize all hunk contents as collapsed
+  // Initialize all hunk contents as expanded
   document.querySelectorAll('.hunk-content').forEach(el => {
-    el.style.display = 'none';
+    el.style.display = 'block';
+    const header = el.previousElementSibling;
+    const toggleIcon = header?.querySelector('.hunk-toggle');
+    if (toggleIcon) {
+      toggleIcon.textContent = '▼';
+    }
   });
 });
